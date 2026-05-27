@@ -1,11 +1,13 @@
-// Signal Detail Page
+// Signal Detail Page - 修复版
 'use client';
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { t, getLang, setLang, Lang } from '@/lib/i18n';
 import { Header, TickerTape, Footer } from '@/components/layout';
 
-export default async function SignalPage(props: { params: Promise<{ id: string }> }) {
-  const { id } = await props.params;
+export default function SignalPage() {
+  const params = useParams();
+  const id = params?.id as string;
   const [lang, setLangState] = useState<Lang>('en');
   useEffect(() => { setLangState(getLang()); }, []);
 
