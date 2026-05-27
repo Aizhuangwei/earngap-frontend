@@ -1,62 +1,73 @@
-// Home Page - 8 Signals List
+// Home Page - Top 3 高机会卡片
 'use client';
 import { useEffect, useState } from 'react';
 import { t, getLang, setLang, Lang } from '@/lib/i18n';
 import { Header, TickerTape, Footer } from '@/components/layout';
 
-export default function AllSignalsPage() {
+export default function HomePage() {
   const [lang, setLangState] = useState<Lang>('en');
   useEffect(() => { setLangState(getLang()); }, []);
-
   const switchLang = () => {
     const next = lang === 'en' ? 'zh' : 'en';
     setLang(next);
     setLangState(next);
   };
 
-  const signals = [
-    { id: 1, title: 'BTC-ETH Cross-Chain Arbitrage Window', src: 'DEX', score: 94, type: 'arbitrage', time: '2m ago', est: '+1.2%' },
-    { id: 2, title: 'NVDA Options Anomaly — Large Call Buys', src: 'Options', score: 91, type: 'options', time: '5m ago', est: '+3.4%' },
-    { id: 3, title: 'Whale Address Moved 15,000 ETH', src: 'On-chain', score: 88, type: 'whale', time: '8m ago', est: '+0.8%' },
-    { id: 4, title: 'AAPL Analyst Upgrade to Buy', src: 'Analyst', score: 85, type: 'rating', time: '12m ago', est: null },
-    { id: 5, title: 'USDC/DAI Depeg Spread 0.3%', src: 'Stablecoin', score: 83, type: 'arbitrage', time: '15m ago', est: '+0.3%' },
-    { id: 6, title: 'TSLA Social Sentiment Spike', src: 'Social', score: 80, type: 'sentiment', time: '18m ago', est: null },
-    { id: 7, title: 'SOL Active Addresses Hit 30-Day High', src: 'On-chain', score: 78, type: 'onchain', time: '22m ago', est: null },
-    { id: 8, title: 'Gold/Silver Ratio Diverges from Mean', src: 'Commodity', score: 76, type: 'ratio', time: '25m ago', est: '+0.5%' },
+  const opportunities = [
+    { rank:1, tag:'Rust重构 JS生态', title:'Bun Rewrite in Rust', desc:'Zig→Rust语言迁移 · 55k+ stars', score:88.5, phase:'EARLY', window:'30天窗口', growth:'338%' },
+    { rank:2, tag:'WiFi空间智能', title:'LiFi Over Power Lines', desc:'电力线WiFi传输 · 12k+ stars', score:82.0, phase:'EARLY', window:'45天窗口', growth:'98%' },
+    { rank:3, tag:'AI代码生成', title:'Cursor AI IDE', desc:'AI辅助编程 · 8.5k+ stars', score:79.0, phase:'EXPANDING', window:'60天窗口', growth:'156%' },
   ];
-  const typeColors: Record<string, string> = { arbitrage:'#059669', options:'#2563eb', whale:'#d97706', rating:'#7c3aed', sentiment:'#db2777', onchain:'#0891b2', ratio:'#d97706' };
 
   return (
-    <div style={{ background:'#f8f9fa', color:'#0f172a', minHeight:'100vh', fontFamily:'Inter, -apple-system, sans-serif' }}>
+    <div style={{ background:'#0a0b0e', color:'#e5e7eb', minHeight:'100vh', fontFamily:'Inter, system-ui, sans-serif' }}>
       <Header lang={lang} switchLang={switchLang} />
       <TickerTape />
-      <main style={{ maxWidth:800, margin:'0 auto', padding:'40px 24px 64px' }}>
-        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:24 }}>
-          <div>
-            <h1 style={{ fontSize:28, fontWeight:800, marginBottom:4 }}>{t('signals.all.title', lang)}</h1>
-            <p style={{ fontSize:14, color:'#64748b' }}>8 {t('signals.all.subtitle', lang)}</p>
-          </div>
+      
+      <main style={{ maxWidth:1280, margin:'0 auto', padding:'24px' }}>
+        {/* Title */}
+        <div style={{ textAlign:'center', marginBottom:32 }}>
+          <h1 style={{ fontSize:24, fontWeight:700, marginBottom:8 }}>发现信息差 · 把握时间窗口 · 赢在认知之前</h1>
+          <p style={{ fontSize:14, color:'#9ca3af' }}>基于 OpenClaw 信息差机会扫描引擎，每日 06:30 全量更新</p>
         </div>
-        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-          {signals.map(s => (
-            <a key={s.id} href={`/signals/${s.id}`} style={{ textDecoration:'none', color:'inherit', display:'block' }}>
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 18px', borderRadius:10, border:'1px solid #e2e8f0', background:'#fff', cursor:'pointer' }}>
-                <div style={{ display:'flex', alignItems:'center', gap:12, minWidth:0, flex:1 }}>
-                  <div style={{ width:8, height:8, borderRadius:'50%', flexShrink:0, background:typeColors[s.type]||'#94a3b8' }} />
-                  <div style={{ minWidth:0 }}>
-                    <div style={{ fontSize:14, fontWeight:500, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{s.title}</div>
-                    <div style={{ display:'flex', gap:8, marginTop:2, fontSize:11, color:'#94a3b8' }}><span>{s.src}</span><span>·</span><span>{s.time}</span></div>
-                  </div>
+
+        {/* Top 3 Cards */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:16, marginBottom:32 }}>
+          {opportunities.map((opp, i) => (
+            <div key={i} style={{ background:'#1a1d26', borderRadius:8, padding:20, border:'1px solid rgba(75,85,99,0.3)', cursor:'pointer' }}>
+              <div style={{ display:'flex', justifyContent:'space-between', marginBottom:12 }}>
+                <div style={{ display:'flex', gap:8, alignItems:'center' }}>
+                  <span style={{ width:20, height:20, borderRadius:'50%', background:i===0?'#10b981':'#374151', color:'#fff', fontSize:10, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center' }}>{opp.rank}</span>
+                  <span style={{ fontSize:11, color:'#9ca3af' }}>{opp.tag}</span>
                 </div>
-                <div style={{ display:'flex', alignItems:'center', gap:12, flexShrink:0 }}>
-                  {s.est && <span style={{ fontSize:13, fontWeight:600, color:'#059669' }}>{s.est}</span>}
-                  <div style={{ background:'#f1f5f9', borderRadius:6, padding:'2px 8px', fontSize:14, fontWeight:700, color:s.score>=90?'#059669':s.score>=80?'#2563eb':'#d97706' }}>{s.score}</div>
+                <span style={{ color:i===0?'#10b981':'#3b82f6', fontSize:14, fontWeight:600 }}>{opp.score}分</span>
+              </div>
+              <h3 style={{ fontSize:15, fontWeight:500, marginBottom:8, color:'#fff' }}>{opp.title}</h3>
+              <p style={{ fontSize:12, color:'#9ca3af', marginBottom:12 }}>{opp.desc}</p>
+              <div style={{ display:'flex', gap:8 }}>
+                <span style={{ fontSize:11, padding:'2px 8px', borderRadius:4, background:'rgba(245,158,11,0.1)', color:'#f59e0b' }}>{opp.phase}</span>
+                <span style={{ fontSize:11, padding:'2px 8px', borderRadius:4, background:'#222633', color:'#d1d5db' }}>{opp.window}</span>
+              </div>
+              <div style={{ marginTop:12, fontSize:11, color:'#9ca3af' }}>
+                <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
+                  <span>趋势强度</span>
+                  <span style={{ color:'#e5e7eb' }}>{opp.growth}</span>
+                </div>
+                <div style={{ display:'flex', justifyContent:'space-between' }}>
+                  <span>平台热度</span>
+                  <span style={{ color:'#e5e7eb' }}>{i===0 ? 'GitHub #1' : i===1 ? 'HN #3' : 'GitHub #5'}</span>
                 </div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
+        
+        {/* 查看全部信号 */}
+        <div style={{ textAlign:'center' }}>
+          <a href="/signals" style={{ color:'#3b82f6', fontSize:14, textDecoration:'none' }}>查看全部 8 个信号 →</a>
+        </div>
       </main>
+      
       <Footer lang={lang} />
     </div>
   );
