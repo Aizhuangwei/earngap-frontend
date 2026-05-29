@@ -62,6 +62,19 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
     return t('gap.' + g, lang) || g;
   };
 
+  const getTrackUrl = (s: any) => {
+    const query = encodeURIComponent(s.title);
+    switch(s.gapType) {
+      case 'PRICE_GAP': return 'https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&q=' + query;
+      case 'PLATFORM_GAP': return 'https://www.coingecko.com/en/search?query=' + query;
+      case 'KNOWLEDGE_GAP': return 'https://www.google.com/search?q=' + query + '+opportunity';
+      case 'TIME_GAP': return 'https://www.google.com/search?q=' + query + '+arbitrage';
+      case 'REGULATORY_GAP': return 'https://www.google.com/search?q=' + query + '+regulation';
+      case 'RESOURCE_GAP': return 'https://www.google.com/search?q=' + query + '+price+comparison';
+      default: return 'https://www.google.com/search?q=' + query;
+    }
+  };
+
   return (
     <div style={{ background:'#f8f9fa', color:'#0f172a', minHeight:'100vh', fontFamily:'Inter, -apple-system, sans-serif' }}>
       <Header lang={lang} switchLang={switchLang} />
@@ -108,8 +121,8 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
           </div>
         </div>
         <div style={{ display:'flex', gap:8 }}>
-          <button style={{ padding:'10px 20px', borderRadius:8, background:'#059669', color:'#fff', fontWeight:600, fontSize:13, border:'none', cursor:'pointer' }}>{t('signals.detail.track', lang)}</button>
-          <button style={{ padding:'10px 20px', borderRadius:8, border:'1px solid #e2e8f0', background:'#fff', color:'#0f172a', fontWeight:500, fontSize:13, cursor:'pointer' }}>{t('signals.detail.share', lang)}</button>
+          <a href={getTrackUrl(signal)} target="_blank" rel="noopener noreferrer" style={{ padding:'10px 20px', borderRadius:8, background:'#059669', color:'#fff', fontWeight:600, fontSize:13, border:'none', cursor:'pointer', textDecoration:'none' }}>{t('signals.detail.track', lang)}</a>
+          <button style={{ padding:'10px 20px', borderRadius:8, border:'1px solid #e2e8f0', background:'#fff', color:'#0f172a', fontWeight:500, fontSize:13, cursor:'pointer' }} onClick={() => {navigator.clipboard.writeText(window.location.href); alert('Copied!');}}>{t('signals.detail.share', lang)}</button>
         </div>
       </main>
       <Footer lang={lang} />
