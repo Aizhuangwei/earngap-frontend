@@ -2,12 +2,13 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.earngap.com:8443';
 
 async function fetchAPI<T>(path: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(${API_BASE}/api/v1, {
+  const url = API_BASE + '/api/v1' + path;
+  const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     next: { revalidate: 60 },
     ...options,
   });
-  if (!res.ok) throw new Error(API : );
+  if (!res.ok) throw new Error('API ' + res.status + ': ' + res.statusText);
   const json = await res.json();
   return json.data;
 }
@@ -17,7 +18,7 @@ export interface Opportunity {
   phase: string; gapType: string; riskLevel: string;
   conviction?: number; scarcity?: number; growth?: number;
   difficulty?: string; contentHash: string; isActive: boolean;
-  createdAt: string; dimensions: Dimension[];
+  updatedAt: string; createdAt: string; dimensions: Dimension[];
   sources?: Source[];
 }
 
@@ -35,9 +36,10 @@ export const api = {
       if (params?.limit) q.set('limit', String(params.limit));
       if (params?.minScore) q.set('minScore', String(params.minScore));
       if (params?.sortBy) q.set('sortBy', params.sortBy);
-      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>(/opportunities?);
+      var qs = q.toString();
+      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>('/opportunities' + (qs ? '?' + qs : ''));
     },
-    get: (id: string) => fetchAPI<Opportunity>(/opportunities/),
+    get: (id: string) => fetchAPI<Opportunity>('/opportunities/' + id),
   },
   stats: () => fetchAPI<Stats>('/stats'),
   alerts: () => fetchAPI<Alert[]>('/alerts'),
