@@ -40,7 +40,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
   if (loading) {
     return (
       <div style={{ background:'#f8f9fa', color:'#0f172a', minHeight:'100vh', fontFamily:'Inter, -apple-system, sans-serif', display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <div style={{ fontSize:14, color:'#64748b' }}>{t('detail.loading', lang)}</div>
+        <div style={{ fontSize:14, color:'#64748b' }}>Loading...</div>
       </div>
     );
   }
@@ -59,7 +59,12 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
   }
 
   const gapLabel = (g: string) => {
-    return t('gap.' + g, lang) || g;
+    const m: Record<string, string> = {
+      PRICE_GAP: 'Price Gap', PLATFORM_GAP: 'Platform', KNOWLEDGE_GAP: 'Knowledge',
+      TIME_GAP: 'Time Adv.', REGULATORY_GAP: 'Regulatory', RESOURCE_GAP: 'Resource',
+      TOOL_GAP: 'Tool Gap', TECHNOLOGY_GAP: 'Tech Gap', HARDWARE_GAP: 'Hardware'
+    };
+    return m[g] || g;
   };
 
   return (
@@ -87,7 +92,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
         </div>
         {signal.growth && (
           <div style={{ padding:16, borderRadius:10, border:'1px solid #d1fae5', background:'#ecfdf5', marginBottom:24 }}>
-            <div style={{ fontSize:13, fontWeight:600, color:'#059669', marginBottom:4 }}>{t('signals.detail.return', lang)}</div>
+            <div style={{ fontSize:13, fontWeight:600, color:'#059669', marginBottom:4 }}>{t('hot.growth', lang)}</div>
             <div style={{ fontSize:20, fontWeight:800, color:'#059669' }}>+{signal.growth}%</div>
           </div>
         )}
