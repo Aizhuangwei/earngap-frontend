@@ -59,12 +59,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
   }
 
   const gapLabel = (g: string) => {
-    const m: Record<string, string> = {
-      PRICE_GAP: 'Price Gap', PLATFORM_GAP: 'Platform', KNOWLEDGE_GAP: 'Knowledge',
-      TIME_GAP: 'Time Adv.', REGULATORY_GAP: 'Regulatory', RESOURCE_GAP: 'Resource',
-      TOOL_GAP: 'Tool Gap', TECHNOLOGY_GAP: 'Tech Gap', HARDWARE_GAP: 'Hardware'
-    };
-    return m[g] || g;
+    return t('gap.' + g, lang) || g;
   };
 
   return (
