@@ -97,6 +97,14 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
           </div>
         )}
         <div style={{ padding:16, borderRadius:10, border:'1px solid #e2e8f0', background:'#fff', marginBottom:24 }}>
+          <div style={{ fontSize:13, fontWeight:600, color:'#64748b', marginBottom:4 }}>{t('detail.source', lang)}</div>
+          <div style={{ fontSize:14, color:'#059669', textDecoration:'none' }}>
+            {signal.sources && signal.sources.length > 0
+              ? signal.sources[0].sourceUrl || signal.sources[0].name
+              : t('detail.source_default', lang)}
+          </div>
+        </div>
+        <div style={{ padding:16, borderRadius:10, border:'1px solid #e2e8f0', background:'#fff', marginBottom:24 }}>
           <div style={{ fontSize:13, fontWeight:600, color:'#64748b', marginBottom:4 }}>{t('signals.detail.detail', lang)}</div>
           <div style={{ fontSize:13, lineHeight:1.8, color:'#0f172a' }}>
             <div style={{ display:'flex', justifyContent:'space-between', padding:'4px 0' }}><span style={{ color:'#64748b' }}>{t('detail.risk_level', lang)}</span><span style={{ fontWeight:500 }}>{t('risk.'+signal.riskLevel, lang)}</span></div>

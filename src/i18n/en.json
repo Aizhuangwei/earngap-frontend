@@ -92,5 +92,7 @@
   "phase.DECLINING": "DECLINING",
   "risk.LOW": "LOW",
   "risk.MEDIUM": "MEDIUM",
-  "risk.HIGH": "HIGH"
+  "risk.HIGH": "HIGH",
+  "detail.source": "Source",
+  "detail.source_default": "Platform Data"
 }
