@@ -63,16 +63,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
   };
 
   const getTrackUrl = (s: any) => {
-    const query = encodeURIComponent(s.title);
-    switch(s.gapType) {
-      case 'PRICE_GAP': return 'https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&q=' + query;
-      case 'PLATFORM_GAP': return 'https://www.coingecko.com/en/search?query=' + query;
-      case 'KNOWLEDGE_GAP': return 'https://www.google.com/search?q=' + query + '+opportunity';
-      case 'TIME_GAP': return 'https://www.google.com/search?q=' + query + '+arbitrage';
-      case 'REGULATORY_GAP': return 'https://www.google.com/search?q=' + query + '+regulation';
-      case 'RESOURCE_GAP': return 'https://www.google.com/search?q=' + query + '+price+comparison';
-      default: return 'https://www.google.com/search?q=' + query;
-    }
+    return s.sourceUrl || 'https://www.google.com/search?q=' + encodeURIComponent(s.title);
   };
 
   return (
