@@ -27,18 +27,47 @@ export default function Home() {
 }
 
 function SignalFeed({ lang }: { lang: Lang }) {
-  const allSignals = [
-    { id: 1, title: 'BTC-ETH Cross-Chain Arbitrage Window', src: 'DEX', score: 94, type: 'arbitrage', time: '2m ago', est: '+1.2%' },
-    { id: 2, title: 'NVDA Options Anomaly — Large Call Buys', src: 'Options', score: 91, type: 'options', time: '5m ago', est: '+3.4%' },
-    { id: 3, title: 'Whale Address Moved 15,000 ETH', src: 'On-chain', score: 88, type: 'whale', time: '8m ago', est: '+0.8%' },
-    { id: 4, title: 'AAPL Analyst Upgrade to Buy', src: 'Analyst', score: 85, type: 'rating', time: '12m ago', est: null },
-    { id: 5, title: 'USDC/DAI Depeg Spread 0.3%', src: 'Stablecoin', score: 83, type: 'arbitrage', time: '15m ago', est: '+0.3%' },
-    { id: 6, title: 'TSLA Social Sentiment Spike', src: 'Social', score: 80, type: 'sentiment', time: '18m ago', est: null },
-    { id: 7, title: 'SOL Active Addresses Hit 30-Day High', src: 'On-chain', score: 78, type: 'onchain', time: '22m ago', est: null },
-    { id: 8, title: 'Gold/Silver Ratio Diverges from Mean', src: 'Commodity', score: 76, type: 'ratio', time: '25m ago', est: '+0.5%' },
-  ];
-  const signals = allSignals.slice(0, 3);
-  const typeColors: Record<string, string> = { arbitrage: '#059669', options: '#2563eb', whale: '#d97706', rating: '#7c3aed', sentiment: '#db2777', onchain: '#0891b2', ratio: '#d97706' };
+  const [topOpps, setTopOpps] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        var r = await fetch('/api/opportunities?limit=3&sortBy=score');
+        var d = await r.json();
+        if (d.success && d.data && d.data.opportunities) {
+          setTopOpps(d.data.opportunities);
+        }
+      } catch(e) { console.error('home feed error', e); }
+    }
+    load();
+    var iv = setInterval(load, 60000);
+    return function() { clearInterval(iv); };
+  }, []);
+
+  var timeAgo = function(d: string) {
+    var diff = Date.now() - new Date(d).getTime();
+    var min = Math.floor(diff / 60000);
+    if (min < 1) return 'just now';
+    if (min < 60) return min + 'm ago';
+    var hr = Math.floor(min / 60);
+    if (hr < 24) return hr + 'h ago';
+    return Math.floor(hr / 24) + 'd ago';
+  };
+
+  var gapLabel = function(g: string) {
+    var m: Record<string, string> = {
+      PRICE_GAP: 'Price Gap', PLATFORM_GAP: 'Platform', KNOWLEDGE_GAP: 'Knowledge',
+      TIME_GAP: 'Time Adv.', REGULATORY_GAP: 'Regulatory', RESOURCE_GAP: 'Resource',
+      TOOL_GAP: 'Tool Gap', TECHNOLOGY_GAP: 'Tech Gap', HARDWARE_GAP: 'Hardware'
+    };
+    return m[g] || g;
+  };
+
+  var typeColors: Record<string, string> = {
+    PRICE_GAP:'#059669', PLATFORM_GAP:'#2563eb', KNOWLEDGE_GAP:'#7c3aed',
+    TIME_GAP:'#d97706', REGULATORY_GAP:'#db2777', RESOURCE_GAP:'#0891b2',
+    TOOL_GAP:'#ea580c', TECHNOLOGY_GAP:'#6366f1', HARDWARE_GAP:'#84cc16'
+  };
 
   return (
     <section id="signals" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 10px 48px' }}>
@@ -50,27 +79,33 @@ function SignalFeed({ lang }: { lang: Lang }) {
         <a href="/signals" style={{ fontSize: 13, color: '#059669', textDecoration: 'none', fontWeight: 500 }}>{t('signals.viewAll', lang)}</a>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 10 }}>
-        {signals.map((s, idx) => (
-          <a key={s.id} href={`/signals/${s.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', padding: '14px 16px', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', height: 220 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-                <span style={{ fontSize: 18, fontWeight: 900, background: 'linear-gradient(135deg, #059669, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', minWidth: 20 }}>{idx + 1}</span>
-                <span style={{ width: 8, height: 8, borderRadius: '50%', background: typeColors[s.type] || '#94a3b8' }} />
-                <span style={{ fontSize: 15, color: '#64748b', fontWeight: 500 }}>{s.src}</span>
-                <span style={{ fontSize: 15, color: '#94a3b8' }}>·</span>
-                <span style={{ fontSize: 15, color: '#94a3b8' }}>{s.time}</span>
-              </div>
-              <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.4, marginBottom: 'auto', color: '#0f172a' }}>{s.title}</div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ fontSize: 15, color: '#94a3b8' }}>{t('signals.score', lang)}</span>
-                  <span style={{ fontSize: 22, fontWeight: 800, color: s.score >= 90 ? '#059669' : s.score >= 80 ? '#2563eb' : '#d97706' }}>{s.score}</span>
+        {topOpps.length === 0 ? (
+          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: 40, color: '#94a3b8', fontSize: 14 }}>Loading...</div>
+        ) : (
+          topOpps.map(function(s: any, idx: number) {
+            return (
+              <a key={s.id} href={'/signals/' + s.id} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', padding: '14px 16px', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', height: 220 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+                    <span style={{ fontSize: 18, fontWeight: 900, background: 'linear-gradient(135deg, #059669, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', minWidth: 20 }}>{idx + 1}</span>
+                    <span style={{ width: 8, height: 8, borderRadius: '50%', background: typeColors[s.gapType] || '#94a3b8' }} />
+                    <span style={{ fontSize: 15, color: '#64748b', fontWeight: 500 }}>{gapLabel(s.gapType)}</span>
+                    <span style={{ fontSize: 15, color: '#94a3b8' }}>·</span>
+                    <span style={{ fontSize: 15, color: '#94a3b8' }}>{timeAgo(s.updatedAt)}</span>
+                  </div>
+                  <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.4, marginBottom: 'auto', color: '#0f172a' }}>{s.title}</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontSize: 15, color: '#94a3b8' }}>{t('signals.score', lang)}</span>
+                      <span style={{ fontSize: 22, fontWeight: 800, color: s.score >= 90 ? '#059669' : s.score >= 80 ? '#2563eb' : '#d97706' }}>{s.score}</span>
+                    </div>
+                    {s.growth && <span style={{ fontSize: 15, fontWeight: 700, color: '#059669' }}>+{s.growth}%</span>}
+                  </div>
                 </div>
-                {s.est && <span style={{ fontSize: 15, fontWeight: 700, color: '#059669' }}>{s.est}</span>}
-              </div>
-            </div>
-          </a>
-        ))}
+              </a>
+            );
+          })
+        )}
       </div>
     </section>
   );
