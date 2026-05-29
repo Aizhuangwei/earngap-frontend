@@ -47,20 +47,15 @@ function SignalFeed({ lang }: { lang: Lang }) {
   var timeAgo = function(d: string) {
     var diff = Date.now() - new Date(d).getTime();
     var min = Math.floor(diff / 60000);
-    if (min < 1) return 'just now';
-    if (min < 60) return min + 'm ago';
+    if (min < 1) return t('time.just_now', lang);
+    if (min < 60) return min + t('time.m', lang) + t('time.ago', lang);
     var hr = Math.floor(min / 60);
-    if (hr < 24) return hr + 'h ago';
-    return Math.floor(hr / 24) + 'd ago';
+    if (hr < 24) return hr + t('time.h', lang) + t('time.ago', lang);
+    return Math.floor(hr / 24) + t('time.d', lang) + t('time.ago', lang);
   };
 
   var gapLabel = function(g: string) {
-    var m: Record<string, string> = {
-      PRICE_GAP: 'Price Gap', PLATFORM_GAP: 'Platform', KNOWLEDGE_GAP: 'Knowledge',
-      TIME_GAP: 'Time Adv.', REGULATORY_GAP: 'Regulatory', RESOURCE_GAP: 'Resource',
-      TOOL_GAP: 'Tool Gap', TECHNOLOGY_GAP: 'Tech Gap', HARDWARE_GAP: 'Hardware'
-    };
-    return m[g] || g;
+    return t('gap.' + g, lang) || g;
   };
 
   var typeColors: Record<string, string> = {

@@ -55,5 +55,18 @@
   "404.title": "信号丢失",
   "404.desc": "你要找的页面不存在。或许它已经过期了——就像大多数套利窗口一样。",
   "404.button": "返回首页",
-  "lang.switch": "English"
+  "lang.switch": "English",
+  "gap.PRICE_GAP": "价格差",
+  "gap.PLATFORM_GAP": "平台差",
+  "gap.KNOWLEDGE_GAP": "认知差",
+  "gap.TIME_GAP": "时间差",
+  "gap.REGULATORY_GAP": "监管差",
+  "gap.RESOURCE_GAP": "资源差",
+  "gap.TOOL_GAP": "工具差",
+  "gap.TECHNOLOGY_GAP": "技术差",
+  "gap.HARDWARE_GAP": "硬件差",
+  "time.just_now": "刚刚",
+  "time.m": "分钟",
+  "time.h": "小时",
+  "time.d": "天"
 }

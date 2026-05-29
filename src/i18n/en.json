@@ -55,5 +55,18 @@
   "404.title": "Signal Lost",
   "404.desc": "The page you're looking for doesn't exist. Maybe it expired — just like most arbitrage windows.",
   "404.button": "Back to Home",
-  "lang.switch": "中文"
+  "lang.switch": "中文",
+  "gap.PRICE_GAP": "Price Gap",
+  "gap.PLATFORM_GAP": "Platform",
+  "gap.KNOWLEDGE_GAP": "Knowledge",
+  "gap.TIME_GAP": "Time Adv.",
+  "gap.REGULATORY_GAP": "Regulatory",
+  "gap.RESOURCE_GAP": "Resource",
+  "gap.TOOL_GAP": "Tool Gap",
+  "gap.TECHNOLOGY_GAP": "Tech Gap",
+  "gap.HARDWARE_GAP": "Hardware",
+  "time.just_now": "just now",
+  "time.m": "m ",
+  "time.h": "h ",
+  "time.d": "d "
 }
