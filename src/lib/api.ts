@@ -18,7 +18,7 @@ export interface Opportunity {
   phase: string; gapType: string; riskLevel: string;
   conviction?: number; scarcity?: number; growth?: number;
   difficulty?: string; contentHash: string; isActive: boolean;
-  updatedAt: string; createdAt: string; dimensions: Dimension[];
+  windowDays?: number; updatedAt: string; createdAt: string; dimensions: Dimension[];
   sources?: Source[];
 }
 
