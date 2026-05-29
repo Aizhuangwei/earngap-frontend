@@ -68,5 +68,14 @@
   "time.just_now": "刚刚",
   "time.m": "分钟",
   "time.h": "小时",
-  "time.d": "天"
+  "time.d": "天",
+  "signals.loading": "加载中...",
+  "signals.no_signals": "暂无信号",
+  "signals.opportunities": "个检测到的机会",
+  "detail.risk_level": "风险等级",
+  "detail.difficulty": "难易程度",
+  "detail.window": "窗口天数",
+  "detail.days": "天",
+  "detail.na": "暂无",
+  "detail.loading": "加载中..."
 }

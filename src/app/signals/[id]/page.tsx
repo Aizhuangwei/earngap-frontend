@@ -40,7 +40,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
   if (loading) {
     return (
       <div style={{ background:'#f8f9fa', color:'#0f172a', minHeight:'100vh', fontFamily:'Inter, -apple-system, sans-serif', display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <div style={{ fontSize:14, color:'#64748b' }}>Loading...</div>
+        <div style={{ fontSize:14, color:'#64748b' }}>{t('detail.loading', lang)}</div>
       </div>
     );
   }
@@ -59,12 +59,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
   }
 
   const gapLabel = (g: string) => {
-    const m: Record<string, string> = {
-      PRICE_GAP: 'Price Gap', PLATFORM_GAP: 'Platform', KNOWLEDGE_GAP: 'Knowledge',
-      TIME_GAP: 'Time Adv.', REGULATORY_GAP: 'Regulatory', RESOURCE_GAP: 'Resource',
-      TOOL_GAP: 'Tool Gap', TECHNOLOGY_GAP: 'Tech Gap', HARDWARE_GAP: 'Hardware'
-    };
-    return m[g] || g;
+    return t('gap.' + g, lang) || g;
   };
 
   return (
@@ -99,9 +94,9 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
         <div style={{ padding:16, borderRadius:10, border:'1px solid #e2e8f0', background:'#fff', marginBottom:24 }}>
           <div style={{ fontSize:13, fontWeight:600, color:'#64748b', marginBottom:4 }}>{t('signals.detail.detail', lang)}</div>
           <div style={{ fontSize:13, lineHeight:1.8, color:'#0f172a' }}>
-            <div style={{ display:'flex', justifyContent:'space-between', padding:'4px 0' }}><span style={{ color:'#64748b' }}>Risk Level</span><span style={{ fontWeight:500 }}>{signal.riskLevel}</span></div>
-            <div style={{ display:'flex', justifyContent:'space-between', padding:'4px 0' }}><span style={{ color:'#64748b' }}>Difficulty</span><span style={{ fontWeight:500 }}>{signal.difficulty || 'N/A'}</span></div>
-            {signal.windowDays && <div style={{ display:'flex', justifyContent:'space-between', padding:'4px 0' }}><span style={{ color:'#64748b' }}>Window</span><span style={{ fontWeight:500 }}>{signal.windowDays} days</span></div>}
+            <div style={{ display:'flex', justifyContent:'space-between', padding:'4px 0' }}><span style={{ color:'#64748b' }}>{t('detail.risk_level', lang)}</span><span style={{ fontWeight:500 }}>{signal.riskLevel}</span></div>
+            <div style={{ display:'flex', justifyContent:'space-between', padding:'4px 0' }}><span style={{ color:'#64748b' }}>{t('detail.difficulty', lang)}</span><span style={{ fontWeight:500 }}>{signal.difficulty || t('detail.na', lang)}</span></div>
+            {signal.windowDays && <div style={{ display:'flex', justifyContent:'space-between', padding:'4px 0' }}><span style={{ color:'#64748b' }}>{t('detail.window', lang)}</span><span style={{ fontWeight:500 }}>{signal.windowDays}{t('detail.days', lang)}</span></div>}
           </div>
         </div>
         <div style={{ display:'flex', gap:8 }}>

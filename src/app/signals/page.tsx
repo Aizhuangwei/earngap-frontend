@@ -42,22 +42,17 @@ export default function AllSignalsPage() {
   };
 
   const gapLabel = (g: string) => {
-    const m: Record<string, string> = {
-      PRICE_GAP: 'Price Gap', PLATFORM_GAP: 'Platform', KNOWLEDGE_GAP: 'Knowledge',
-      TIME_GAP: 'Time Adv.', REGULATORY_GAP: 'Regulatory', RESOURCE_GAP: 'Resource',
-      TOOL_GAP: 'Tool Gap', TECHNOLOGY_GAP: 'Tech Gap', HARDWARE_GAP: 'Hardware'
-    };
-    return m[g] || g;
+    return t('gap.' + g, lang) || g;
   };
 
   const timeAgo = (d: string) => {
     const diff = Date.now() - new Date(d).getTime();
     const min = Math.floor(diff / 60000);
-    if (min < 1) return 'just now';
-    if (min < 60) return min + 'm ago';
+    if (min < 1) return t('time.just_now', lang);
+    if (min < 60) return min + t('time.m', lang) + t('time.ago', lang);
     const hr = Math.floor(min / 60);
-    if (hr < 24) return hr + 'h ago';
-    return Math.floor(hr / 24) + 'd ago';
+    if (hr < 24) return hr + t('time.h', lang) + t('time.ago', lang);
+    return Math.floor(hr / 24) + t('time.d', lang) + t('time.ago', lang);
   };
 
   return (
@@ -69,15 +64,15 @@ export default function AllSignalsPage() {
           <div>
             <h1 style={{ fontSize:28, fontWeight:800, marginBottom:4 }}>{t('signals.all.title', lang)}</h1>
             <p style={{ fontSize:14, color:'#64748b' }}>
-              {loading ? 'Loading...' : opps.length + ' opportunities detected'}
+              {loading ? t('signals.loading', lang) : opps.length + t('signals.opportunities', lang)}
             </p>
           </div>
         </div>
         <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
           {loading ? (
-            <div style={{ textAlign:'center', padding:40, color:'#94a3b8' }}>Loading signals...</div>
+            <div style={{ textAlign:'center', padding:40, color:'#94a3b8' }}>{t('signals.loading', lang)}</div>
           ) : opps.length === 0 ? (
-            <div style={{ textAlign:'center', padding:40, color:'#94a3b8' }}>No signals found</div>
+            <div style={{ textAlign:'center', padding:40, color:'#94a3b8' }}>{t('signals.no_signals', lang)}</div>
           ) : (
             opps.map(s => (
               <a key={s.id} href={'/signals/' + s.id} style={{ textDecoration:'none', color:'inherit', display:'block' }}>

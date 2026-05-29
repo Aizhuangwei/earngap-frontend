@@ -68,5 +68,14 @@
   "time.just_now": "just now",
   "time.m": "m ",
   "time.h": "h ",
-  "time.d": "d "
+  "time.d": "d ",
+  "signals.loading": "Loading...",
+  "signals.no_signals": "No signals found",
+  "signals.opportunities": " opportunities detected",
+  "detail.risk_level": "Risk Level",
+  "detail.difficulty": "Difficulty",
+  "detail.window": "Window",
+  "detail.days": " days",
+  "detail.na": "N/A",
+  "detail.loading": "Loading..."
 }
