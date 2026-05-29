@@ -7,10 +7,10 @@ const dictionaries: Record<Lang, Record<string, string>> = { en, zh };
 
 // Get stored lang or default to 'en'
 export function getLang(): Lang {
-  if (typeof window === 'undefined') return 'zh';
+  if (typeof window === 'undefined') return 'en';
   const stored = localStorage.getItem('earngap_lang');
   if (stored === 'zh' || stored === 'en') return stored;
-  return 'zh';
+  return 'en';
 }
 
 export function setLang(lang: Lang) {
