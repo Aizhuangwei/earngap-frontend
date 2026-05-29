@@ -85,5 +85,12 @@
   "source.news": "News & Media",
   "source.social": "Social & Sentiment",
   "source.regulatory": "Regulatory & Filings",
-  "source.prediction": "Prediction Markets"
+  "source.prediction": "Prediction Markets",
+  "phase.EARLY": "EARLY",
+  "phase.EXPANDING": "EXPANDING",
+  "phase.MATURE": "MATURE",
+  "phase.DECLINING": "DECLINING",
+  "risk.LOW": "LOW",
+  "risk.MEDIUM": "MEDIUM",
+  "risk.HIGH": "HIGH"
 }

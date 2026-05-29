@@ -85,5 +85,12 @@
   "source.news": "新闻与媒体",
   "source.social": "社交与情绪",
   "source.regulatory": "监管与文件",
-  "source.prediction": "预测市场"
+  "source.prediction": "预测市场",
+  "phase.EARLY": "早期",
+  "phase.EXPANDING": "成长期",
+  "phase.MATURE": "成熟期",
+  "phase.DECLINING": "衰退期",
+  "risk.LOW": "低",
+  "risk.MEDIUM": "中等",
+  "risk.HIGH": "高"
 }
