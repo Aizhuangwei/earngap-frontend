@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "recharts"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://api.earngap.com:8443/api/v1/:path*",
+      },
+    ];
+  },
   async headers() {
     return [
       {

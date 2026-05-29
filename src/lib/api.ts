@@ -1,8 +1,8 @@
 // API Client - 所有数据请求统一入口
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.earngap.com:8443';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
 async function fetchAPI<T>(path: string, options?: RequestInit): Promise<T> {
-  const url = API_BASE + '/api/v1' + path;
+  const url = '/api/' + path;
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     next: { revalidate: 60 },
