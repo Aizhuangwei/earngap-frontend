@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://api.earngap.com:8443/api/v1/:path*",
+        destination: "https://api.earngap.com/api/v1/:path*",
       },
     ];
   },
