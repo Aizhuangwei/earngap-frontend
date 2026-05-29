@@ -77,5 +77,6 @@
   "detail.window": "窗口天数",
   "detail.days": "天",
   "detail.na": "暂无",
-  "detail.loading": "加载中..."
+  "detail.loading": "加载中...",
+  "time.ago": "前"
 }

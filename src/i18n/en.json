@@ -77,5 +77,6 @@
   "detail.window": "Window",
   "detail.days": " days",
   "detail.na": "N/A",
-  "detail.loading": "Loading..."
+  "detail.loading": "Loading...",
+  "time.ago": " ago"
 }
