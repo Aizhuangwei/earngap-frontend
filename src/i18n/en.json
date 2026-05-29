@@ -78,5 +78,12 @@
   "detail.days": " days",
   "detail.na": "N/A",
   "detail.loading": "Loading...",
-  "time.ago": " ago"
+  "time.ago": " ago",
+  "source.crypto": "Crypto Exchanges & DEXs",
+  "source.onchain": "On-Chain Analytics",
+  "source.options": "Options & Derivatives",
+  "source.news": "News & Media",
+  "source.social": "Social & Sentiment",
+  "source.regulatory": "Regulatory & Filings",
+  "source.prediction": "Prediction Markets"
 }

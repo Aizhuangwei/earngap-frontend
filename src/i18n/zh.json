@@ -78,5 +78,12 @@
   "detail.days": "天",
   "detail.na": "暂无",
   "detail.loading": "加载中...",
-  "time.ago": "前"
+  "time.ago": "前",
+  "source.crypto": "加密货币交易所与DEX",
+  "source.onchain": "链上数据分析",
+  "source.options": "期权与衍生品",
+  "source.news": "新闻与媒体",
+  "source.social": "社交与情绪",
+  "source.regulatory": "监管与文件",
+  "source.prediction": "预测市场"
 }
