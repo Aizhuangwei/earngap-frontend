@@ -1,5 +1,6 @@
 // Shared Layout Components — Header, TickerTape, Footer
 'use client';
+import React from 'react';
 import { t, Lang } from '@/lib/i18n';
 
 // ========================
@@ -37,26 +38,47 @@ export function Header({ lang, switchLang }: { lang: Lang; switchLang?: () => vo
 // Ticker Tape
 // ========================
 export function TickerTape() {
-  const items = [
-    { s: 'BTC', p: '74,841', c: '+1.29%', u: true }, { s: 'ETH', p: '3,892', c: '+0.87%', u: true },
-    { s: 'SPY', p: '749.69', c: '+0.12%', u: true }, { s: 'NVDA', p: '892.41', c: '-0.34%', u: false },
-    { s: 'QQQ', p: '727.97', c: '+0.32%', u: true }, { s: 'GLD', p: '408.52', c: '+1.32%', u: true },
-    { s: 'DOGE', p: '0.1017', c: '-2.14%', u: false }, { s: 'SOL', p: '189.43', c: '+3.21%', u: true },
+  const [prices, setPrices] = React.useState<any[]>([]);
+  const coins = [
+    {id:'bitcoin',sym:'BTC'},{id:'ethereum',sym:'ETH'},{id:'dogecoin',sym:'DOGE'},{id:'solana',sym:'SOL'}
   ];
-  return (
-    <div style={{ height: 60, background: '#f1f5f9', borderBottom: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
-      <div style={{ display: 'flex', animation: 'scroll 30s linear infinite', gap: 64, paddingLeft: 40, whiteSpace: 'nowrap' }}>
-        {[...items, ...items].map((item, i) => (
-          <span key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, fontSize: 18, fontFamily: 'SF Mono, monospace' }}>
-            <span style={{ fontWeight: 700, color: '#0f172a' }}>{item.s}</span>
-            <span style={{ color: '#475569', fontWeight: 500 }}>${item.p}</span>
-            <span style={{ color: item.u ? '#059669' : '#dc2626', fontWeight: 700 }}>{item.c}</span>
-            <span style={{ width: 1, height: 24, background: '#e2e8f0', marginLeft: 16 }} />
-          </span>
-        ))}
-      </div>
-      <style>{`@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>
-    </div>
+
+  React.useEffect(() => {
+    async function load() {
+      try {
+        var ids = coins.map(function(c){return c.id;}).join(',');
+        var r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=' + ids + '&vs_currencies=usd&include_24hr_change=true');
+        var d = await r.json();
+        var items = coins.map(function(coin){
+          var info = d[coin.id] || {};
+          var usd = info.usd;
+          var chg = info.usd_24h_change;
+          var pStr = usd != null ? (usd < 1 ? usd.toFixed(4) : (usd < 100 ? usd.toFixed(2) : usd.toLocaleString('en-US',{minimumFractionDigits:2}))) : '--';
+          var cStr = chg != null ? (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%' : '';
+          return {s:coin.sym, p:pStr, c:cStr, u:chg != null ? chg >= 0 : true};
+        });
+        setPrices(items);
+      } catch(e) { console.error('ticker error',e); }
+    }
+    load();
+    var iv = setInterval(load, 60000);
+    return function() { clearInterval(iv); };
+  }, []);
+
+  if (prices.length === 0) return null;
+
+  return React.createElement('div', {style:{height:60,background:'#f1f5f9',borderBottom:'1px solid #e2e8f0',overflow:'hidden',display:'flex',alignItems:'center'}},
+    React.createElement('div', {style:{display:'flex',animation:'scroll 30s linear infinite',gap:64,paddingLeft:40,whiteSpace:'nowrap'}},
+      (prices as any).concat(prices).map(function(item: any, i: number) {
+        return React.createElement('span', {key:i, style:{display:'flex',alignItems:'center',gap:14,fontSize:18,fontFamily:'SF Mono, monospace'}},
+          React.createElement('span', {style:{fontWeight:700,color:'#0f172a'}}, item.s),
+          '$' + item.p,
+          React.createElement('span', {style:{color:item.u ? '#059669' : '#dc2626',fontWeight:700}}, item.c),
+          React.createElement('span', {style:{width:1,height:24,background:'#e2e8f0',marginLeft:16}})
+        );
+      })
+    ),
+    React.createElement('style', null, '@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}')
   );
 }
 
