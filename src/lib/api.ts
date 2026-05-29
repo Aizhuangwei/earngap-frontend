@@ -1,13 +1,13 @@
 // API Client - 所有数据请求统一入口
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.earngap.com:8443';
 
 async function fetchAPI<T>(path: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}/api/v1${path}`, {
+  const res = await fetch(${API_BASE}/api/v1, {
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     next: { revalidate: 60 },
     ...options,
   });
-  if (!res.ok) throw new Error(`API ${res.status}: ${res.statusText}`);
+  if (!res.ok) throw new Error(API : );
   const json = await res.json();
   return json.data;
 }
@@ -28,7 +28,6 @@ export interface ScanLog { id: string; status: string; totalOpps: number; newOpp
 export interface Alert { id: string; type: string; message: string; opportunity: { id: string; title: string; score: number }; createdAt: string; }
 
 export const api = {
-  // 机会列���
   opportunities: {
     list: (params?: { page?: number; limit?: number; minScore?: number; sortBy?: string }) => {
       const q = new URLSearchParams();
@@ -36,9 +35,9 @@ export const api = {
       if (params?.limit) q.set('limit', String(params.limit));
       if (params?.minScore) q.set('minScore', String(params.minScore));
       if (params?.sortBy) q.set('sortBy', params.sortBy);
-      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>(`/opportunities?${q}`);
+      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>(/opportunities?);
     },
-    get: (id: string) => fetchAPI<Opportunity>(`/opportunities/${id}`),
+    get: (id: string) => fetchAPI<Opportunity>(/opportunities/),
   },
   stats: () => fetchAPI<Stats>('/stats'),
   alerts: () => fetchAPI<Alert[]>('/alerts'),
