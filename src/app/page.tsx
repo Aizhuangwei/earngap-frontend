@@ -32,7 +32,7 @@ function SignalFeed({ lang }: { lang: Lang }) {
   useEffect(() => {
     async function load() {
       try {
-        var r = await fetch('/api/v1/opportunities?limit=3&sortBy=score');
+        var r = await fetch('/api/opportunities?limit=3&sortBy=score');
         var d = await r.json();
         if (d.success && d.data && d.data.opportunities) {
           setTopOpps(d.data.opportunities);

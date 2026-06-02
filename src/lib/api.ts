@@ -37,9 +37,9 @@ export const api = {
       if (params?.minScore) q.set('minScore', String(params.minScore));
       if (params?.sortBy) q.set('sortBy', params.sortBy);
       var qs = q.toString();
-      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>('/v1/opportunities' + (qs ? '?' + qs : ''));
+      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>('/opportunities' + (qs ? '?' + qs : ''));
     },
-    get: (id: string) => fetchAPI<Opportunity>('/v1/opportunities/' + id),
+    get: (id: string) => fetchAPI<Opportunity>('/opportunities/' + id),
   },
   stats: () => fetchAPI<Stats>('/stats'),
   alerts: () => fetchAPI<Alert[]>('/alerts'),
