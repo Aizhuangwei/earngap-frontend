@@ -14,7 +14,7 @@ async function fetchAPI<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 export interface Opportunity {
-  id: string; title: string; summary: string; score: number;
+  id: string; title: string; title_en?: string; summary: string; summary_en?: string; score: number;
   phase: string; gapType: string; riskLevel: string;
   conviction?: number; scarcity?: number; growth?: number;
   difficulty?: string; contentHash: string; isActive: boolean;
@@ -37,9 +37,9 @@ export const api = {
       if (params?.minScore) q.set('minScore', String(params.minScore));
       if (params?.sortBy) q.set('sortBy', params.sortBy);
       var qs = q.toString();
-      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>('/opportunities' + (qs ? '?' + qs : ''));
+      return fetchAPI<{ opportunities: Opportunity[]; pagination: any }>('/v1/opportunities' + (qs ? '?' + qs : ''));
     },
-    get: (id: string) => fetchAPI<Opportunity>('/opportunities/' + id),
+    get: (id: string) => fetchAPI<Opportunity>('/v1/opportunities/' + id),
   },
   stats: () => fetchAPI<Stats>('/stats'),
   alerts: () => fetchAPI<Alert[]>('/alerts'),

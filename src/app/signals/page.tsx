@@ -80,7 +80,7 @@ export default function AllSignalsPage() {
                   <div style={{ display:'flex', alignItems:'center', gap:12, minWidth:0, flex:1 }}>
                     <div style={{ width:8, height:8, borderRadius:'50%', flexShrink:0, background: typeColor(s.gapType) }} />
                     <div style={{ minWidth:0 }}>
-                      <div style={{ fontSize:14, fontWeight:500, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{s.title}</div>
+                      <div style={{ fontSize:14, fontWeight:500, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{lang === 'zh' ? s.title : (s.title_en || s.title)}</div>
                       <div style={{ display:'flex', gap:8, marginTop:2, fontSize:11, color:'#94a3b8' }}>
                         <span>{gapLabel(s.gapType)}</span><span>·</span><span>{timeAgo(s.updatedAt)}</span>
                       </div>

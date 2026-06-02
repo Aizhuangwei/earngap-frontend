@@ -78,7 +78,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
               <span style={{ fontSize:11, color:'#059669', background:'#ecfdf5', padding:'2px 8px', borderRadius:4, fontWeight:500 }}>{gapLabel(signal.gapType)}</span>
               <span style={{ fontSize:11, color:'#7c3aed', background:'#f5f3ff', padding:'2px 8px', borderRadius:4, fontWeight:500 }}>{t('phase.'+signal.phase, lang)}</span>
             </div>
-            <h1 style={{ fontSize:24, fontWeight:700, lineHeight:1.3 }}>{signal.title}</h1>
+            <h1 style={{ fontSize:24, fontWeight:700, lineHeight:1.3 }}>{lang === 'zh' ? signal.title : (signal.title_en || signal.title)}</h1>
           </div>
           <div style={{ textAlign:'right' }}>
             <div style={{ fontSize:28, fontWeight:800, color:signal.score>=90?'#059669':'#2563eb' }}>{signal.score}</div>
@@ -87,7 +87,7 @@ export default function SignalPage(props: { params: Promise<{ id: string }> }) {
         </div>
         <div style={{ padding:16, borderRadius:10, border:'1px solid #e2e8f0', background:'#fff', marginBottom:24 }}>
           <div style={{ fontSize:13, fontWeight:600, color:'#64748b', marginBottom:8 }}>{t('signals.detail.detail', lang)}</div>
-          <p style={{ fontSize:14, lineHeight:1.7, color:'#0f172a' }}>{signal.summary}</p>
+          <p style={{ fontSize:14, lineHeight:1.7, color:'#0f172a' }}>{lang === 'zh' ? signal.summary : (signal.summary_en || signal.summary)}</p>
         </div>
         {signal.growth && (
           <div style={{ padding:16, borderRadius:10, border:'1px solid #d1fae5', background:'#ecfdf5', marginBottom:24 }}>

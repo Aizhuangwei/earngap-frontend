@@ -32,7 +32,7 @@ function SignalFeed({ lang }: { lang: Lang }) {
   useEffect(() => {
     async function load() {
       try {
-        var r = await fetch('/api/opportunities?limit=3&sortBy=score');
+        var r = await fetch('/api/v1/opportunities?limit=3&sortBy=score');
         var d = await r.json();
         if (d.success && d.data && d.data.opportunities) {
           setTopOpps(d.data.opportunities);
@@ -88,7 +88,7 @@ function SignalFeed({ lang }: { lang: Lang }) {
                     <span style={{ fontSize: 15, color: '#94a3b8' }}>·</span>
                     <span style={{ fontSize: 15, color: '#94a3b8' }}>{timeAgo(s.updatedAt)}</span>
                   </div>
-                  <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.4, marginBottom: 'auto', color: '#0f172a' }}>{s.title}</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.4, marginBottom: 'auto', color: '#0f172a' }}>{lang === 'zh' ? s.title : (s.title_en || s.title)}</div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 15, color: '#94a3b8' }}>{t('signals.score', lang)}</span>
